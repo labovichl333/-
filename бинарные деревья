@@ -4,16 +4,8 @@ class Node
     public String dData;
     public Node leftChild;
     public Node rightChild;
-    public void displayNode()
-    {
-        System.out.print('{');
-        System.out.print(iData);
-        System.out.print(", ");
-        System.out.print(dData);
-        System.out.print("} ");
-    }
-} 
-
+    
+}
 import java.util.Stack;
 
 public class BinaryTree {
@@ -91,13 +83,12 @@ public boolean delete(int key)
             return false;
     }
 
-    if (current.leftChild == null &&
-            current.rightChild == null) {
+    if (current.leftChild == null && current.rightChild == null) {
         if (current == root)
             root = null;
         else if (isLeftChild)
             parent.leftChild = null;
-        else 
+        else
             parent.rightChild = null;
     }
     else if (current.rightChild == null)
@@ -117,12 +108,19 @@ public boolean delete(int key)
     else
     {
         Node successor = getSuccessor(current);
-        if (current == root)
+        if (current == root){
+            successor.leftChild=root.leftChild;
             root = successor;
-        else if (isLeftChild)
+        }
+
+        else if (isLeftChild){
+           successor.leftChild=parent.leftChild.leftChild;
             parent.leftChild = successor;
-        else
+        }
+        else{
+            successor.leftChild=parent.rightChild.leftChild;
             parent.rightChild = successor;
+        }
         return true;
     }
     return true;
@@ -189,6 +187,7 @@ public boolean delete(int key)
                     System.out.print(localRoot.iData + " ");
                 }
             }
+
             public void displayTree ()
             {
                 Stack globalStack = new Stack();
@@ -224,9 +223,7 @@ public boolean delete(int key)
                         globalStack.push(localStack.pop());
                 }
             }
-
     }
-    
     public class Main {
     public static void main(String[] args){
         BinaryTree theTree = new BinaryTree();
@@ -239,14 +236,14 @@ public boolean delete(int key)
         theTree.insert(38, "ё");
         theTree.insert(33, "ж");
         theTree.insert(86, "з");
-        theTree.insert(93, "и");
-        theTree.insert(94, "й");
+        theTree.insert(84, "и");
+        theTree.insert(93, "й");
         theTree.insert(94, "к");
+
 
         theTree.displayTree();
         System.out.println(theTree.find(94).dData);
-        theTree.delete(94);
-        System.out.println(theTree.find(94).dData);
+        theTree.delete(52);
         theTree.displayTree();
         theTree.inOrderTraverse();
         theTree.postOrderTraverse();
